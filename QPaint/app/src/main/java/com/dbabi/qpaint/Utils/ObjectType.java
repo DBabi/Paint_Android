@@ -1,15 +1,14 @@
-package com.dbabi.qpaint;
+package com.dbabi.qpaint.Utils;
 
 public enum ObjectType {
     NONE,
     LINE,
     CIRCLE,
-    SQUARE,
-    ELLIPSE,
     RECTANGLE,
-    BENZIER,
-    STAR,
+    BEZIER,
     LOZENGE,
-    POLYGON,
+    TRIANGLE,
+    PEN,
+    ERASE,
 
 }

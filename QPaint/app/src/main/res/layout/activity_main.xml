@@ -23,66 +23,80 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/colorGrey">
-        <Button
-            android:id="@+id/btnRed"
+        <ImageButton
+            android:id="@+id/btnLine"
             android:layout_width="@dimen/buttonSize"
             android:layout_height="@dimen/buttonSize"
             android:layout_marginStart="@dimen/buttonMarginStart"
             android:layout_marginTop="@dimen/buttonMarginTop"
             android:layout_marginBottom="@dimen/buttonMarginBot"
-            android:background="@color/colorRed"/>
-        <Button
-            android:id="@+id/btnOrange"
+            android:src="@drawable/line"
+            android:scaleType="centerCrop"
+            android:background="@null"/>
+        <ImageButton
+            android:id="@+id/btnCircle"
             android:layout_width="@dimen/buttonSize"
             android:layout_height="@dimen/buttonSize"
             android:layout_marginStart="@dimen/buttonMarginStart"
             android:layout_marginTop="@dimen/buttonMarginTop"
-            android:background="@color/colorOrange"/>
-        <Button
-            android:id="@+id/btnYellow"
+            android:src="@drawable/circle"
+            android:scaleType="centerCrop"
+            android:background="@null"/>
+        <ImageButton
+            android:id="@+id/btnRectangle"
             android:layout_width="@dimen/buttonSize"
             android:layout_height="@dimen/buttonSize"
             android:layout_marginStart="@dimen/buttonMarginStart"
             android:layout_marginTop="@dimen/buttonMarginTop"
-            android:background="@color/colorYellow"/>
-        <Button
-            android:id="@+id/btnGreen"
+            android:src="@drawable/rectangle"
+            android:scaleType="centerCrop"
+            android:background="@null"/>
+        <ImageButton
+            android:id="@+id/btnTriangle"
             android:layout_width="@dimen/buttonSize"
             android:layout_height="@dimen/buttonSize"
             android:layout_marginStart="@dimen/buttonMarginStart"
             android:layout_marginTop="@dimen/buttonMarginTop"
-            android:background="@color/colorGreen"/>
-        <Button
-            android:id="@+id/btnBlue"
+            android:src="@drawable/triangle"
+            android:scaleType="centerCrop"
+            android:background="@null"/>
+        <ImageButton
+            android:id="@+id/btnLozenge"
             android:layout_width="@dimen/buttonSize"
             android:layout_height="@dimen/buttonSize"
             android:layout_marginStart="@dimen/buttonMarginStart"
             android:layout_marginTop="@dimen/buttonMarginTop"
-            android:background="@color/colorBlue"/>
-        <Button
-            android:id="@+id/btnIndigo"
+            android:src="@drawable/lozenge"
+            android:scaleType="centerCrop"
+            android:background="@null"/>
+        <ImageButton
+            android:id="@+id/btnBezier"
             android:layout_width="@dimen/buttonSize"
             android:layout_height="@dimen/buttonSize"
             android:layout_marginStart="@dimen/buttonMarginStart"
             android:layout_marginTop="@dimen/buttonMarginTop"
-            android:background="@color/colorIndigo"/>
-        <Button
-            android:id="@+id/btnPurple"
+            android:src="@drawable/bezier"
+            android:scaleType="centerCrop"
+            android:background="@null"/>
+        <ImageButton
+            android:id="@+id/btnPen_Erase"
             android:layout_width="@dimen/buttonSize"
             android:layout_height="@dimen/buttonSize"
             android:layout_marginStart="@dimen/buttonMarginStart"
             android:layout_marginTop="@dimen/buttonMarginTop"
-            android:background="@color/colorPurple"/>
+            android:src="@drawable/pencil"
+            android:scaleType="centerCrop"
+            android:background="@null" />
         <Button
             android:id="@+id/btnColorPicker"
             android:layout_width="@dimen/buttonSize"
             android:layout_height="@dimen/buttonSize"
             android:layout_marginStart="@dimen/buttonMarginStart"
             android:layout_marginTop="@dimen/buttonMarginTop"
-            android:background="#FFFFFF"/>
+            android:background="#000000"/>
     </LinearLayout>
 
-    <com.dbabi.qpaint.PaintView
+    <com.dbabi.qpaint.Components.PaintView
         android:id="@+id/paintView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

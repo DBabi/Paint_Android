@@ -18,4 +18,6 @@
     <color name="colorBlue">#2979FF</color>
     <color name="colorIndigo">#3D5AFE</color>
     <color name="colorPurple">#651FFF</color>
+
+    <color name="backgroundButton">#70D2E2</color>
 </resources>

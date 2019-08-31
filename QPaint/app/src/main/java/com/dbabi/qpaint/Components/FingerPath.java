@@ -1,5 +1,6 @@
-package com.dbabi.qpaint;
+package com.dbabi.qpaint.Components;
 
+import android.graphics.Paint;
 import android.graphics.Path;
 
 public class FingerPath {

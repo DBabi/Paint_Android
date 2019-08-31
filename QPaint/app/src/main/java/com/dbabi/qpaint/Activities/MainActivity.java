@@ -1,10 +1,8 @@
-package com.dbabi.qpaint;
+package com.dbabi.qpaint.Activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,22 +13,29 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.dbabi.qpaint.Utils.ObjectType;
+import com.dbabi.qpaint.Components.PaintView;
+import com.dbabi.qpaint.R;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorChangedListener;
 import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.Objects;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
 
     private PaintView paintView;
     private android.support.v7.widget.Toolbar toolbar;
     private int currentColor = Color.WHITE;
-    private Button btnPicker;
-    private int[] ids = {R.id.btnRed,R.id.btnOrange,R.id.btnYellow,R.id.btnGreen,R.id.btnBlue,
-            R.id.btnIndigo,R.id.btnPurple};
+    private ObjectType currentObj = ObjectType.NONE;
+    Button btnPicker;
+    private int[] ids = {R.id.btnLine,R.id.btnCircle,R.id.btnRectangle,R.id.btnTriangle,R.id.btnBezier,
+            R.id.btnLozenge,R.id.btnPen_Erase};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,21 +43,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         paintView = findViewById(R.id.paintView);
         toolbar = findViewById(R.id.toolbar);
         mappingView();
-        btnPicker = findViewById(R.id.btnColorPicker);
-        btnPicker.setOnClickListener(this);
+
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         paintView.init(metrics);
-
     }
 
     private void mappingView()
     {
+        btnPicker = findViewById(R.id.btnColorPicker);
+        btnPicker.setOnClickListener(this);
         for(int id : ids){
-            Button btn = findViewById(id);
+            ImageButton btn = findViewById(id);
             btn.setOnClickListener(this);
+            btn.setOnFocusChangeListener(this);
         }
     }
 
@@ -83,7 +89,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
+    public void onFocusChange(View view, boolean b) {
+        if(b) {
+            resetBackgroundButton();
+            view.setBackgroundColor(getResources().getColor(R.color.backgroundButton));
+        }else{
+            resetBackgroundButton();
+            currentObj = ObjectType.NONE;
+            changeObject(currentObj);
+        }
+    }
+
+    @Override
+    public void onClick(final View v) {
 
         switch (v.getId()) {
             case R.id.btnColorPicker:
@@ -108,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 //toast("onColorSelected: 0x" + Integer.toHexString(selectedColor));
                             }
                         })
-                        .setPositiveButton("ok", new ColorPickerClickListener() {
+                        .setPositiveButton("OK", new ColorPickerClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
                                 changeColor(selectedColor);
@@ -128,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 }
                             }
                         })
-                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }
@@ -138,21 +156,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .build()
                         .show();
                 return;
+            case R.id.btnLine: currentObj = ObjectType.LINE;break;
+            case R.id.btnCircle: currentObj = ObjectType.CIRCLE;break;
+            case R.id.btnRectangle: currentObj = ObjectType.RECTANGLE;break;
+            case R.id.btnTriangle: currentObj = ObjectType.TRIANGLE;break;
+            case R.id.btnLozenge: currentObj = ObjectType.LOZENGE;break;
+            case R.id.btnBezier: currentObj = ObjectType.BEZIER;break;
+            case R.id.btnPen_Erase:
+                if(currentObj == ObjectType.PEN){
+                    currentObj = ObjectType.ERASE;
+                    ImageButton temp = (ImageButton)v;
+                    temp.setImageResource(R.drawable.eraser);
+                }
+                else{
+                    currentObj = ObjectType.PEN;
+                    ImageButton temp = (ImageButton)v;
+                    temp.setImageResource(R.drawable.pencil);
+                }
         }
-
-        Button button = findViewById(v.getId());
-        ColorDrawable buttonColor = (ColorDrawable) button.getBackground();
-        changeColor(buttonColor.getColor());
-
+        resetBackgroundButton();
+        v.setBackgroundColor(getResources().getColor(R.color.backgroundButton));
+        changeObject(currentObj);
     }
 
     private void changeColor(int selectedColor) {
         currentColor = selectedColor;
         btnPicker.setBackgroundColor(selectedColor);
-        paintView.setCurrentColor(selectedColor);
+        paintView.setColor(selectedColor);
+    }
+
+    private void changeObject(ObjectType object){
+        paintView.setObject(object);
+    }
+
+    private void resetBackgroundButton(){
+        for(int id : ids){
+            ImageButton btn = findViewById(id);
+            btn.setBackground(null);
+        }
     }
 
     private void toast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
+
 }
